@@ -7,10 +7,24 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
 import com.tcs.ecommerce.model.Product;
 import com.tcs.ecommerce.utils.DBUtils;
 
+@Repository
 public class ProductDAOImpl implements ProductDAO {
+	
+	
+	@Autowired
+	DBUtils dbUtils;
+	
+	
+	
+	
+	/*****
 	
 	private ProductDAOImpl() {
 		
@@ -25,10 +39,11 @@ public static ProductDAO getInstance() {
 	return dao;
 	
 }
+**/
 	@Override
 	public String createProduct(Product product) {
 		// TODO Auto-generated method stub
-		Connection connection = DBUtils.getConnection();
+		Connection connection = dbUtils.getConnection();
 		PreparedStatement preparedStatement = null;
 		int result = 0;
 		String insertProduct = "insert into PRODUCT (productid,productname,description,category,price) values(?,?,?,?,?)";
@@ -62,7 +77,7 @@ public static ProductDAO getInstance() {
 		}
 		
 		finally {
-			DBUtils.closeConnection(connection);
+			dbUtils.closeConnection(connection);
 		}
 	}
 
@@ -70,7 +85,7 @@ public static ProductDAO getInstance() {
 	public Optional<Product> getProductById(int id) {
 		// TODO Auto-generated method stub
 		
-		Connection connection = DBUtils.getConnection();
+		Connection connection = dbUtils.getConnection();
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		Product product = null;
@@ -105,7 +120,7 @@ public static ProductDAO getInstance() {
 		}
 		
 		finally {
-			DBUtils.closeConnection(connection);
+			dbUtils.closeConnection(connection);
 		}
 		
 		return Optional.of(product);
